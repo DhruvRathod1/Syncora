@@ -1,0 +1,41 @@
+<% if (user) { %>
+    <h2>Welcome, <%= user.email %>
+    </h2>
+    <form method="GET" action="/logout"><button type="submit">Logout</button></form>
+    <% } else { %>
+        <h2>Not logged in</h2>
+        <a href="/login">Login</a>
+        <% } %>
+
+            <h3>Your boards</h3>
+            <form method="POST" action="/boards/create">
+                <input name="title" placeholder="New board title" required />
+                <button type="submit">Create board</button>
+            </form>
+
+            <ul>
+                <% (boards || []).forEach(function(board){ %>
+                    <li><a href="/board/<%= board.id %>">
+                            <%= board.title %>
+                        </a></li>
+                    <% }) %>
+            </ul>
+
+            <% if ((invites || []).length) { %>
+                <h3>Invites</h3>
+                <ul>
+                    <% invites.forEach(function(inv){ %>
+                        <li>
+                            Invited to "<%= inv.boardTitle %>" as <%= inv.role %>
+                                    <form style="display:inline" method="POST"
+                                        action="/invites/<%= inv.boardId %>/accept">
+                                        <button type="submit">Accept</button>
+                                    </form>
+                                    <form style="display:inline" method="POST"
+                                        action="/invites/<%= inv.boardId %>/reject">
+                                        <button type="submit">Reject</button>
+                                    </form>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>

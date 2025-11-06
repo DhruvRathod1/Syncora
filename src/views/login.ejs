@@ -1,0 +1,17 @@
+<% if (query && query.registered) { %>
+  <p style="color:green">Registered <%= query.email %>. Please login.</p>
+  <% } %>
+    <% if (query && query.loggedout) { %>
+      <p style="color:green">You have logged out.</p>
+      <% } %>
+        <% if (query && query.error) { %>
+          <p style="color:red">Login failed. Please try again.</p>
+          <% } %>
+
+            <form method="POST" action="/auth/login">
+              <h2>Login</h2>
+              <input name="email" type="email" placeholder="Email" value="<%= query?.email || '' %>" required />
+              <input name="password" type="password" placeholder="Password" required />
+              <button type="submit">Login</button>
+            </form>
+            <a href="/register">Register</a>

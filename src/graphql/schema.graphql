@@ -1,0 +1,28 @@
+enum Role { OWNER EDITOR VIEWER }
+enum TaskStatus { TODO DOING DONE }
+
+type User { id: ID!, email: String! }
+type Task { id: ID!, boardId: ID!, text: String!, status: TaskStatus!, createdBy: ID! }
+type Membership { userId: ID!, role: Role! }
+type Board { id: ID!, title: String!, ownerId: ID!, tasks: [Task!]!, members: [Membership!]! }
+
+type Query {
+  me: User
+  myBoards: [Board!]!
+  board(id: ID!): Board
+}
+
+type Mutation {
+  register(email: String!, password: String!): Boolean
+  login(email: String!, password: String!): Boolean
+  createBoard(title: String!): Board!
+  createTask(boardId: ID!, text: String!): Task!
+  addMember(boardId: ID!, email: String!, role: Role = VIEWER): Membership!
+  acceptInvite(boardId: ID!): Boolean!
+  rejectInvite(boardId: ID!): Boolean!
+}
+
+type Subscription {
+  taskChanged(boardId: ID!): Task!
+  memberAdded(boardId: ID!): Membership!
+}

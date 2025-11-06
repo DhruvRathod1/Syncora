@@ -1,0 +1,41 @@
+<h2>
+  <%= board.title %>
+</h2>
+<ul id="tasks">
+  <% tasks.forEach(t=> { %>
+    <li>
+      <%= t.text %>
+    </li>
+    <% }) %>
+</ul>
+<form id="taskForm">
+  <input id="taskText" placeholder="New task..." />
+  <button type="submit">Add</button>
+</form>
+
+<h3>Members</h3>
+<ul id="members">
+  <% (members || []).forEach(function(m){ %>
+    <li>
+      <%= m.userEmail || m.userId %> (<%= m.role %>)
+    </li>
+    <% }) %>
+</ul>
+<form id="inviteForm">
+  <input id="inviteEmail" type="email" placeholder="Invite by email" required />
+  <select id="inviteRole">
+    <option value="VIEWER">Viewer</option>
+    <option value="EDITOR">Editor</option>
+  </select>
+  <button type="submit">Invite</button>
+  <span id="inviteMsg"></span>
+</form>
+<script>
+  window.BOARD_ID = '<%= board.id %>';
+  window.WS_URL = `${location.origin.replace('http', 'ws')}/ws`;
+  window.GRAPHQL_URL = '/graphql';
+  window.addEventListener('DOMContentLoaded', () => {
+    // no-op: real logic is in /js/board.js
+  });
+</script>
+<script src="/js/board.js"></script>
