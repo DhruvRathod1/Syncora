@@ -1,18 +1,236 @@
+/* Minimal monochrome theme */
+:root {
+  --bg: #ffffff;
+  --text: #111111;
+  --muted: #666666;
+  --border: #e6e6e6;
+  --accent: #000000;
+  --accent-weak: #222222;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
-  font-family: sans-serif;
+  height: 100%;
+}
+
+body {
+  margin: 0;
   padding: 2rem;
-  background: #f8fafc;
-  color: #222;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  line-height: 1.5;
 }
-form {
+
+/* Layout helpers */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.cluster {
   display: flex;
-  flex-direction: column;
-  width: 300px;
-  margin: auto;
+  gap: .5rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
-input, button {
-  margin-top: 10px;
-  padding: 8px;
+
+.center {
+  margin-inline: auto;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin: 0 0 .75rem;
+  font-weight: 650;
+}
+
+p {
+  margin: 0 0 .75rem;
+  color: var(--text);
+}
+
+small,
+.muted {
+  color: var(--muted);
+}
+
+a {
+  color: var(--accent-weak);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+}
+
+a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Panels */
+.card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  background: #fff;
+}
+
+/* Forms */
+form {
+  display: grid;
+  gap: .6rem;
+  width: min(420px, 100%);
+  margin: 1rem 0;
+}
+
+label {
+  font-weight: 600;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  border-radius: 6px;
+  padding: .6rem .7rem;
   font-size: 1rem;
 }
-ul { list-style: none; padding: 0; }
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #cfcfcf;
+  box-shadow: 0 0 0 3px #00000014;
+}
+
+button,
+.btn {
+  appearance: none;
+  border: 1px solid var(--text);
+  background: var(--text);
+  color: #fff;
+  padding: .55rem .9rem;
+  font-size: .95rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover,
+.btn:hover {
+  filter: contrast(1.1) brightness(1.02);
+}
+
+button.secondary,
+.btn.secondary {
+  background: #fff;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+button.ghost,
+.btn.ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--text);
+}
+
+/* Lists */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: .5rem 0 1rem;
+}
+
+ul li {
+  padding: .5rem .6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: .5rem;
+}
+
+/* Messages */
+.msg {
+  padding: .6rem .8rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.msg.success {
+  background: #f6f6f6;
+  border-color: #dcdcdc;
+}
+
+.msg.error {
+  background: #ffffff;
+  border-color: #bdbdbd;
+  color: #000;
+}
+
+/* Tables (if any) */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: .6rem .5rem;
+  text-align: left;
+}
+
+th {
+  background: #fafafa;
+}
+
+/* Utility spacing */
+.mt-1 {
+  margin-top: .25rem;
+}
+
+.mt-2 {
+  margin-top: .5rem;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.mb-1 {
+  margin-bottom: .25rem;
+}
+
+.mb-2 {
+  margin-bottom: .5rem;
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.py-1 {
+  padding-block: .25rem;
+}
+
+.py-2 {
+  padding-block: .5rem;
+}
+
+.py-3 {
+  padding-block: 1rem;
+}

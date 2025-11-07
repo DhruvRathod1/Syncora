@@ -1,41 +1,71 @@
-<% if (user) { %>
-    <h2>Welcome, <%= user.email %>
-    </h2>
-    <form method="GET" action="/logout"><button type="submit">Logout</button></form>
-    <% } else { %>
-        <h2>Not logged in</h2>
-        <a href="/login">Login</a>
-        <% } %>
-
-            <h3>Your boards</h3>
-            <form method="POST" action="/boards/create">
-                <input name="title" placeholder="New board title" required />
-                <button type="submit">Create board</button>
+<div class="stack mt-3">
+    <div class="cluster" style="justify-content: space-between;">
+        <div>
+            <h1>Your Boards</h1>
+            <% if (user) { %>
+                <p class="muted">Logged in as <%= user.email %>
+                </p>
+                <% } %>
+        </div>
+        <% if (user) { %>
+            <form method="GET" action="/logout">
+                <button type="submit" class="secondary">Logout</button>
             </form>
+            <% } %>
+    </div>
 
-            <ul>
-                <% (boards || []).forEach(function(board){ %>
-                    <li><a href="/board/<%= board.id %>">
-                            <%= board.title %>
-                        </a></li>
-                    <% }) %>
-            </ul>
+    <div class="card">
+        <h3>Create a Board</h3>
+        <form method="POST" action="/boards/create" style="max-width: 400px;">
+            <input name="title" placeholder="Board title" required />
+            <button type="submit">Create Board</button>
+        </form>
+    </div>
 
-            <% if ((invites || []).length) { %>
-                <h3>Invites</h3>
+    <div class="card">
+        <h3>My Boards</h3>
+        <% if ((boards || []).length===0) { %>
+            <p class="muted">No boards yet. Create one above!</p>
+            <% } else { %>
                 <ul>
-                    <% invites.forEach(function(inv){ %>
+                    <% boards.forEach(function(board){ %>
                         <li>
-                            Invited to "<%= inv.boardTitle %>" as <%= inv.role %>
-                                    <form style="display:inline" method="POST"
-                                        action="/invites/<%= inv.boardId %>/accept">
-                                        <button type="submit">Accept</button>
-                                    </form>
-                                    <form style="display:inline" method="POST"
-                                        action="/invites/<%= inv.boardId %>/reject">
-                                        <button type="submit">Reject</button>
-                                    </form>
+                            <a href="/board/<%= board.id %>">
+                                <%= board.title %>
+                            </a>
                         </li>
                         <% }) %>
                 </ul>
                 <% } %>
+    </div>
+
+    <% if ((invites || []).length) { %>
+        <div class="card">
+            <h3>Pending Invites</h3>
+            <ul>
+                <% invites.forEach(function(inv){ %>
+                    <li>
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                            <div>
+                                <strong>
+                                    <%= inv.boardTitle %>
+                                </strong>
+                                <span class="muted"> — <%= inv.role %></span>
+                            </div>
+                            <div class="cluster">
+                                <form method="POST" action="/invites/<%= inv.boardId %>/accept">
+                                    <button type="submit"
+                                        style="padding: .4rem .7rem; font-size: .9rem;">Accept</button>
+                                </form>
+                                <form method="POST" action="/invites/<%= inv.boardId %>/reject">
+                                    <button type="submit" class="secondary"
+                                        style="padding: .4rem .7rem; font-size: .9rem;">Reject</button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                    <% }) %>
+            </ul>
+        </div>
+        <% } %>
+</div>

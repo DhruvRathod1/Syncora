@@ -1,41 +1,63 @@
-<h2>
-  <%= board.title %>
-</h2>
-<ul id="tasks">
-  <% tasks.forEach(t=> { %>
-    <li>
-      <%= t.text %>
-    </li>
-    <% }) %>
-</ul>
-<form id="taskForm">
-  <input id="taskText" placeholder="New task..." />
-  <button type="submit">Add</button>
-</form>
+<div class="stack mt-3">
+  <div class="cluster" style="justify-content: space-between;">
+    <h1>
+      <%= board.title %>
+    </h1>
+    <a href="/boards" class="btn secondary">← Back to Boards</a>
+  </div>
 
-<h3>Members</h3>
-<ul id="members">
-  <% (members || []).forEach(function(m){ %>
-    <li>
-      <%= m.userEmail || m.userId %> (<%= m.role %>)
-    </li>
-    <% }) %>
-</ul>
-<form id="inviteForm">
-  <input id="inviteEmail" type="email" placeholder="Invite by email" required />
-  <select id="inviteRole">
-    <option value="VIEWER">Viewer</option>
-    <option value="EDITOR">Editor</option>
-  </select>
-  <button type="submit">Invite</button>
-  <span id="inviteMsg"></span>
-</form>
+  <div class="card">
+    <h3>Tasks</h3>
+    <ul id="tasks">
+      <% if ((tasks || []).length===0) { %>
+        <p class="muted">No tasks yet. Add one below!</p>
+        <% } else { %>
+          <% tasks.forEach(function(t){ %>
+            <li>
+              <%= t.text %>
+            </li>
+            <% }) %>
+              <% } %>
+    </ul>
+    <form id="taskForm" style="max-width: 500px;">
+      <input id="taskText" placeholder="New task..." />
+      <button type="submit">Add Task</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Members</h3>
+    <ul id="members">
+      <% if ((members || []).length===0) { %>
+        <p class="muted">No members yet.</p>
+        <% } else { %>
+          <% members.forEach(function(m){ %>
+            <li>
+              <strong>
+                <%= m.userEmail || m.userId %>
+              </strong>
+              <span class="muted"> — <%= m.role %></span>
+            </li>
+            <% }) %>
+              <% } %>
+    </ul>
+    <form id="inviteForm" style="max-width: 500px;">
+      <div style="display: grid; grid-template-columns: 1fr auto auto; gap: .6rem;">
+        <input id="inviteEmail" type="email" placeholder="Invite by email" required />
+        <select id="inviteRole">
+          <option value="VIEWER">Viewer</option>
+          <option value="EDITOR">Editor</option>
+        </select>
+        <button type="submit">Invite</button>
+      </div>
+      <span id="inviteMsg" class="muted" style="font-size: .9rem;"></span>
+    </form>
+  </div>
+</div>
+
 <script>
   window.BOARD_ID = '<%= board.id %>';
   window.WS_URL = `${location.origin.replace('http', 'ws')}/ws`;
   window.GRAPHQL_URL = '/graphql';
-  window.addEventListener('DOMContentLoaded', () => {
-    // no-op: real logic is in /js/board.js
-  });
 </script>
 <script src="/js/board.js"></script>
